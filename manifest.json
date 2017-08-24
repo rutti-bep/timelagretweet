@@ -1,0 +1,12 @@
+{
+  "manifest_version": 2,
+  "name": "timeLagReTweet",
+  "version":"0.0.1",
+  "description":"リツイートを時間指定でする",
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*"],
+      "js": ["test.js"]
+    }
+  ]
+}
