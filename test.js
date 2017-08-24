@@ -2,30 +2,24 @@ console.log("runnning TRT")
 var timelagRetweetButtonList = [];
 function addElement(){
   console.log("addElement");
-  var elm = document.getElementsByClassName("stream-item-footer");
   
   timelagRetweetButtonList.forEach(function(ele){
     ele.remove();
   });
 
-  var tweetElment = document.getElementsByClassName('js-tweet-text-container');
+  var tweetElment = document.getElementsByClassName('stream-item-footer');
   for (var i = 0;i < tweetElment.length; i++){
-    var header = tweetElment[i].parentNode.firstElementChild;
-    var footer = tweetElment[i].parentNode.lastElementChild;
-    if(footer.className == "context"){
-      console.log(footer)
-      continue;
-    }
-    var tweetUrl = header.children[1].firstElementChild.href;
+    var footer = tweetElment[i];
     var timelagRetweetElement = document.createElement('div');
     timelagRetweetElement.classList.add('ProfileTweet-action');
     var timelagRetweetButton = document.createElement('button');
     timelagRetweetButton.innerHTML = "TRT";
-    timelagRetweetButton.value = tweetUrl;
     timelagRetweetButton.classList.add('ProfileTweet-actionButton');
     timelagRetweetElement.appendChild(timelagRetweetButton);
     timelagRetweetButton.addEventListener("click",function(e){
-      alert(e.target.value);
+      var tweet = window.location.href.match(RegExp(/^https:\/\/twitter\.com\/\S*\/status\/[0-9]*$/)) ? e.target.parentNode.parentNode.parentNode.parentNode : e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+      var url = tweet.getAttribute("data-permalink-path")//.parentNode;//firstElementChild.children[1].firstElementChild.href;
+      alert(url);
     },false);
     footer.children[1].appendChild(timelagRetweetElement);
     timelagRetweetButtonList.push(timelagRetweetElement)
