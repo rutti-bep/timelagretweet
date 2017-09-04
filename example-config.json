@@ -1,0 +1,10 @@
+{
+  "comment":"exampleのconfig.jsonです",
+  "twitter": {
+    "request_url": "https://api.twitter.com/oauth/request_token",
+    "authorize_url": "https://api.twitter.com/oauth/authorize",
+    "access_url": "https://api.twitter.com/oauth/access_token",
+    "consumer_key": "https://apps.twitter.com/ でCreate New Appするともらえるやつ",
+    "consumer_secret": "https://apps.twitter.com/ でCreate New Appするともらえるやつ"
+  }
+}

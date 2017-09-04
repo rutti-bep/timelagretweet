@@ -3,10 +3,26 @@
   "name": "timeLagReTweet",
   "version":"0.0.1",
   "description":"リツイートを時間指定でする",
+  "background":{
+    "scripts":[
+      "dest/oauth/chrome_ex_oauthsimple.js",
+      "dest/oauth/chrome_ex_oauth.js",
+      "dest/js/background.js"
+    ]
+  },
+  "permissions": [
+    "https://twitter.com/oauth/*",
+    "https://api.twitter.com/1.1/*",
+    "storage"
+  ],
+  "web_accessible_resources": [
+    "dest/html/oauthCallback.html*",
+    "dest/html/retweetSet.html"
+  ],
   "content_scripts": [
     {
       "matches": ["https://twitter.com/*"],
-      "js": ["test.js"]
+      "js": ["dest/js/twitterPageUiController.js"]
     }
   ]
 }
