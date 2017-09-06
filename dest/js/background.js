@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     default:
       console.log('no method' + request.method);
       response["status"] = false
-      break;
+        break;
   }
   sendResponse(response);
 })
@@ -46,39 +46,43 @@ var getConfig = new Promise((resolve, reject)=> {
 getConfig
 .catch((err)=>{return console.log("error",err)})
 .then(()=>{
-    class Twitter {
-      static init() {
-        var oauth = ChromeExOAuth.initBackgroundPage(config);
-        chromeExOAuth.callback_page = 'dest/html/oauthCallback.html';
-        return new this(oauth);
-      }
-      constructor(oauth /* ChromeExOAuth */) {
-        this.oauth = oauth;
-      }
-
-      auth(){
-        return new Promise((resolve, reject) => {
-          this.oauth.authorize((/* token, secret */) => {
-            resolve(/* {token, secret} */);
-          })
-        })
-      }
-      request(method, url, data) {
-        return new Promise((resolve, reject) => {
-          this.oauth.sendSignedRequest(
-              url,
-              (res) => {
-                try {
-                  let data = JSON.parse(res);
-                  if (data.errors && data.errors.length) return reject();
-                  else resolve(data);
-                } catch (err) { reject(err); }
-              },
-              {method, method}
-              );
-        })
-      }
+  class Twitter {
+    static init() {
+      var oauth = ChromeExOAuth.initBackgroundPage(config);
+      chromeExOAuth.callback_page = 'dest/html/retweetSet.html';
+      return new this(oauth);
     }
+
+    constructor(oauth /* ChromeExOAuth */) {
+      this.oauth = oauth;
+    }
+
+    auth(refresh) {
+      if (refresh == undefined || refresh == true) this.oauth.clearTokens();
+      return new Promise((resolve, reject) => {
+        this.oauth.authorize((/* token, secret */) => {
+          resolve(/* {token, secret} */);
+        })
+      })
+    }
+
+    request(method, url, data) {
+      return new Promise((resolve, reject) => {
+        if (!this.oauth.hasToken()) return reject();
+        this.oauth.sendSignedRequest(
+            url,
+            (res) => {
+              try {
+                let data = JSON.parse(res);
+                if (data.errors && data.errors.length) return reject();
+                else resolve(data);
+              } catch (err) { reject(err); }
+            },
+            {method, method}
+            );
+      })
+    }
+  }
   twitter = Twitter.init();
   console.log("twitter",twitter)
 })
