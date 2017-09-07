@@ -49,7 +49,7 @@ getConfig
   class Twitter {
     static init() {
       var oauth = ChromeExOAuth.initBackgroundPage(config);
-      chromeExOAuth.callback_page = 'dest/html/retweetSet.html';
+      oauth.callback_page = 'dest/html/oauthPage.html';
       return new this(oauth);
     }
 
@@ -57,8 +57,7 @@ getConfig
       this.oauth = oauth;
     }
 
-    auth(refresh) {
-      if (refresh == undefined || refresh == true) this.oauth.clearTokens();
+    auth() {
       return new Promise((resolve, reject) => {
         this.oauth.authorize((/* token, secret */) => {
           resolve(/* {token, secret} */);

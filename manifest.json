@@ -13,10 +13,12 @@
   "permissions": [
     "https://twitter.com/oauth/*",
     "https://api.twitter.com/1.1/*",
+    "https://publish.twitter.com/oembed?url=*",
+    "https://platform.twitter.com/*",
     "storage"
   ],
   "web_accessible_resources": [
-    "dest/html/oauthCallback.html*",
+    "dest/html/oauthPage.html*",
     "dest/html/retweetSet.html"
   ],
   "content_scripts": [
@@ -24,5 +26,6 @@
       "matches": ["https://twitter.com/*"],
       "js": ["dest/js/twitterPageUiController.js"]
     }
-  ]
+  ],
+  "content_security_policy":"script-src 'self' https://*.twitter.com https://*.twimg.com/; object-src 'self'"
 }

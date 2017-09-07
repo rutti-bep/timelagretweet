@@ -23,7 +23,7 @@ function addElement(){
       //alert(url);
       chrome.runtime.sendMessage({method: 'setValue',key:'retweetUrl', value: url}, function (response) {
         if(response){
-            window.open(chrome.extension.getURL("dest/html/retweetSet.html"),"_blank","width=500px,height=300")
+            window.open(chrome.extension.getURL("dest/html/retweetSet.html"),"_blank","width=600px,height=600")
         }else{
           console.log(response)
         }
