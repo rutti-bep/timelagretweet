@@ -63,6 +63,9 @@ authenticatedPromise
       var timeArray = String(time).split(':');
       var now = new Date();
       var timeleft = ((Number(timeArray[0])-now.getHours())*60+(Number(timeArray[1])-now.getMinutes()))*60*1000-(now.getSeconds()*1000);
+      if(timeleft < 0){
+        timeleft += 24*60*60*1000;
+      }
 
       var request = {method:"setRetweet","tweetUrl":retweetUrl,"timeleft":timeleft};
       if(!comment == false){request["comment"] = comment}
