@@ -1,8 +1,9 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   var response = {"status":true};
   switch (request.method){
-    case "setRetweet":// sec,url,comment
-      setTimeout(Retweet(request.url,request.comment),sec);
+    case "setRetweet":// timeleft,url,comment
+      console.log("retweetSet!",request.timeleft,request.tweeturl,request.comment,"plz wait...")
+      setTimeout(()=>{return retweet(request.tweetUrl,request.comment)},request.timeleft);
       break;
     case "setValue":
       localStorage.setItem(request.key,request.value);
@@ -22,6 +23,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   }
   sendResponse(response);
 })
+
+function retweet(tweetUrl,comment){
+  var promise;
+  if(comment == undefined){
+    var tweetId = tweetUrl.split("/")
+     promise = twitter.request("POST","https://api.twitter.com/1.1/statuses/retweet/"+tweetId[tweetId.length-1]+".json");
+  }else{
+    promise = twitter.request("POST","https://api.twitter.com/1.1/statuses/update.json",{'status':String(comment)+" "+tweetUrl,'trim_user':true})
+  }
+  promise.then(()=>{return console.log("comp")})
+}
 
 var config = {};
 var twitter;
@@ -65,7 +77,7 @@ getConfig
       })
     }
 
-    request(method, url, data) {
+    request(method, url, options) {
       return new Promise((resolve, reject) => {
         if (!this.oauth.hasToken()) return reject();
         this.oauth.sendSignedRequest(
@@ -77,7 +89,7 @@ getConfig
                 else resolve(data);
               } catch (err) { reject(err); }
             },
-            {method, method}
+            {'method':method,'parameters':options}
             );
       })
     }

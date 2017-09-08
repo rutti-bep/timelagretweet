@@ -20,33 +20,66 @@ var getReTweetUrl = new Promise((resolve, reject)=> {
 });
 
 authenticatedPromise
-.then(()=>{return getReTweetUrl})
-  .then(()=>{
-    return new Promise((resolve,reject)=>{
-      var tweetCardRequest = new XMLHttpRequest();
-      var url = "https://publish.twitter.com/oembed?url="+retweetUrl+"&omit_script=true";
-      tweetCardRequest.open("GET",url,true);
-      tweetCardRequest.onload = function(){
-        if (tweetCardRequest.readyState === 4) {
-          if (tweetCardRequest.status === 200) {
-            var jsonRes = JSON.parse(tweetCardRequest.responseText)
-            var html = jsonRes.html;
-            var tweetCard = document.getElementById('tweetcard')
+.then(()=>{return getReTweetUrl;})
+.then(()=>{
+  return new Promise((resolve,reject)=>{
+    var tweetCardRequest = new XMLHttpRequest();
+    var url = "https://publish.twitter.com/oembed?url="+retweetUrl+"&omit_script=true";
+    tweetCardRequest.open("GET",url,true);
+    tweetCardRequest.onload = function(){
+      if (tweetCardRequest.readyState === 4) {
+        if (tweetCardRequest.status === 200) {
+          var jsonRes = JSON.parse(tweetCardRequest.responseText);
+          var html = jsonRes.html;
+          var tweetCard = document.getElementById('tweetcard')
             tweetCard.innerHTML = html;
 
-            var script = document.createElement('script');
-            script.src = "https://platform.twitter.com/widgets.js"; 
-            
-            document.getElementById('tweetcard').appendChild(script);
-            
-            console.log(html)
+          var script = document.createElement('script');
+          script.src = "https://platform.twitter.com/widgets.js"; 
+
+          document.getElementById('tweetcard').appendChild(script);
+
+          console.log(html)
             resolve();
-          } else {
-            reject();
-          }
+        } else {
+          reject();
         }
       }
-      tweetCardRequest.onerror = () => reject(tweetCardRequest.statusText);
-      tweetCardRequest.send(null);
-    })
-  }).catch((err)=>{return console.log("error",err)})
+    }
+    tweetCardRequest.onerror = () => reject(tweetCardRequest.statusText);
+    tweetCardRequest.send(null);
+  })
+})
+.then(()=>{
+  return new Promise((resolve,reject)=>{
+    var submitButton = document.getElementById("retweetSubmit");
+    submitButton.addEventListener('click', submit, false);
+
+    function submit(){
+      var time = document.getElementById('retweettime').value;
+      var comment = document.getElementById('comment').value;
+      console.log(time,comment);
+
+      var timeArray = String(time).split(':');
+      var now = new Date();
+      var timeleft = ((Number(timeArray[0])-now.getHours())*60+(Number(timeArray[1])-now.getMinutes()))*60*1000-(now.getSeconds()*1000);
+
+      var request = {method:"setRetweet","tweetUrl":retweetUrl,"timeleft":timeleft};
+      if(!comment == false){request["comment"] = comment}
+      console.log("retweetRequest :",request) 
+
+      chrome.runtime.sendMessage(request,function (response){
+        console.log(response["status"]);
+        if(!response["status"]){reject();}
+        resolve();
+      });
+    }
+  });
+})
+.catch((err)=>{return alert("errorが発生しました "+err+" リロードで治る可能性があります...")})
+.then(()=>{return new Promise((resolve)=>{
+  alert("settingが完了しました。ページを閉じます");
+  window.close();
+  resolve();
+
+})})
