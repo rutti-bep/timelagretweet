@@ -2,7 +2,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   var response = {"status":true};
   switch (request.method){
     case "setRetweet":// timeleft,url,comment
-      console.log("retweetSet!",request.timeleft,request.tweeturl,request.comment,"plz wait...")
+      console.log("retweetSet!",request,"plz wait...")
       setTimeout(()=>{return retweet(request.tweetUrl,request.comment)},request.timeleft);
       break;
     case "setValue":
@@ -14,7 +14,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       response["value"] = localStorage.getItem(request.key);
       break;
     case "getTwitter":
-      response["twitter"] = twitter();
+      response["twitter"] = twitter;
       break;
     default:
       console.log('no method' + request.method);
