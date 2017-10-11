@@ -1,0 +1,72 @@
+body {
+  margin : 0 0 0 0;
+}
+
+.twitter-tweet {
+  margin : 0 0 0 0 !important;
+}
+
+#form {
+  display:inline;
+  max-width: 100px;
+  position: relative;
+}
+
+#tweetcard {
+  float: left;
+}
+
+.form-item{
+  display: block;
+  margin: 0 0 0 0;
+  border: 0px;
+  font-size: 18px;
+}
+
+#retweet-time{
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 36px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0 10px;
+  background: transparent;
+  box-sizing: border-box;
+  color: #999;
+  text-align: center;
+}
+
+#comment{
+  width:188px;
+  height:98px;
+  padding: 5px 5px 5px 5px;
+  margin-top:10px;
+  margin-bottom:10px;
+  border: solid 1px #ccc;
+  border-radius: 5px;
+
+  font-size:16px;
+  color: #999;
+}
+
+#retweet-submit{
+  display: inline-block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  background: #668ad8;/*ボタン色*/ color: #FFF;
+  border-bottom: solid 4px #627295;
+  border-radius: 3px;
+}
+
+#retweet-submit:active {/*ボタンを押したとき*/ -ms-transform: translateY(4px);
+  -webkit-transform: translateY(4px);
+  transform: translateY(4px);/*下に動く*/ box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);/*影を小さく*/ border-bottom: none;
+} 
+
+input[type=time]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+input[type=time]::-webkit-clear-button {
+    -webkit-appearance: none;
+  }

@@ -5,11 +5,14 @@
     <title>retweet set</title>
     <script type="text/javascript" src="../js/retweetSet.js"></script>
     <script type="text/javascript" src="../js/twitterSetup.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/popup.css">
   </head>
   <body>
     <div id="tweetcard"></div>
-    <input type="time" name="retweetTime" id="retweettime" value="00:00">
-    <textarea name="tweetComment" id="comment" placeholder="コメントが追加できます"  rows="2" cols="40"></textarea>
-    <button id="retweetSubmit">retweet</button>
+    <div id="form">
+      <input type="time" name="retweetTime" class="form-item"  id="retweet-time" value="00:00">
+      <textarea name="tweetComment" class="form-item" id="comment" placeholder="コメントが追加できます"  rows="2" cols="40"></textarea>
+      <button class="form-item" id="retweet-submit">retweet</button>
+    </div>
   </body>
 </html>

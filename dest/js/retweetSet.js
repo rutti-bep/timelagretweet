@@ -24,7 +24,7 @@ authenticatedPromise
 .then(()=>{
   return new Promise((resolve,reject)=>{
     var tweetCardRequest = new XMLHttpRequest();
-    var url = "https://publish.twitter.com/oembed?url="+retweetUrl+"&omit_script=true";
+    var url = "https://publish.twitter.com/oembed?url="+retweetUrl+"&omit_script=true&maxwidth=300";
     tweetCardRequest.open("GET",url,true);
     tweetCardRequest.onload = function(){
       if (tweetCardRequest.readyState === 4) {
@@ -52,11 +52,11 @@ authenticatedPromise
 })
 .then(()=>{
   return new Promise((resolve,reject)=>{
-    var submitButton = document.getElementById("retweetSubmit");
+    var submitButton = document.getElementById("retweet-submit");
     submitButton.addEventListener('click', submit, false);
 
     function submit(){
-      var time = document.getElementById('retweettime').value;
+      var time = document.getElementById('retweet-time').value;
       var comment = document.getElementById('comment').value;
       console.log(time,comment);
 
