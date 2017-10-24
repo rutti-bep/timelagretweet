@@ -3,6 +3,9 @@
   "name": "timeLagReTweet",
   "version":"0.0.1",
   "description":"リツイートを時間指定でする",
+  "icons":{
+    "128":"icon128-a.png"
+  },
   "background":{
     "scripts":[
       "dest/oauth/chrome_ex_oauthsimple.js",

@@ -1,4 +1,4 @@
-console.log("runnning TRT")
+console.log("runnning TLRT")
 
 var timelagRetweetButtonList = [];
 function addElement(){
@@ -14,7 +14,7 @@ function addElement(){
     var timelagRetweetElement = document.createElement('div');
     timelagRetweetElement.classList.add('ProfileTweet-action');
     var timelagRetweetButton = document.createElement('button');
-    timelagRetweetButton.innerHTML = "TRT";
+    timelagRetweetButton.innerHTML = "TLRT";
     timelagRetweetButton.classList.add('ProfileTweet-actionButton');
     timelagRetweetElement.appendChild(timelagRetweetButton);
     timelagRetweetButton.addEventListener("click",function(e){
@@ -23,7 +23,8 @@ function addElement(){
       //alert(url);
       chrome.runtime.sendMessage({method: 'setValue',key:'retweetUrl', value: url}, function (response) {
         if(response){
-            window.open(chrome.extension.getURL("dest/html/retweetSet.html"),"_blank","width=500px,height=400px")
+            var windowObj = window.open(chrome.extension.getURL("dest/html/retweetSet.html"),"_blank","width=500px,height=250px")
+            windowObj.locationbar.visible = false;
         }else{
           console.log(response)
         }
